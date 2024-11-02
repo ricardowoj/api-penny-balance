@@ -1,5 +1,6 @@
 package com.europe.pennybalance.dto;
 
+import com.europe.pennybalance.enums.TradeRepublicType;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,7 +13,7 @@ import java.time.LocalDate;
 public class TransactionTradeRepublicDTO {
     private Long id;
     private LocalDate date;
-    private String type;
+    private TradeRepublicType type;
     private String description;
     private BigDecimal moneyIn;
     private BigDecimal moneyOut;

@@ -30,9 +30,4 @@ public class TransactionController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to process file: " + e.getMessage());
         }
     }
-
-    @PostConstruct
-    public void init() {
-        System.out.println("TransactionController initialized");
-    }
 }

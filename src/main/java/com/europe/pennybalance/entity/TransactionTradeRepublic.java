@@ -1,5 +1,6 @@
 package com.europe.pennybalance.entity;
 
+import com.europe.pennybalance.enums.TradeRepublicType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,7 +21,7 @@ public class TransactionTradeRepublic {
 
     private LocalDate date;
 
-    private String type;
+    private TradeRepublicType type;
 
     private String description;
 

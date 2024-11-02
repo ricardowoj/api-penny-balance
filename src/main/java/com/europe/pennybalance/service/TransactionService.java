@@ -1,6 +1,6 @@
 package com.europe.pennybalance.service;
 
-import com.europe.pennybalance.enums.StatementSource;
+import com.europe.pennybalance.enums.StatementSourceEnum;
 import lombok.AllArgsConstructor;
 import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -25,7 +25,7 @@ public class TransactionService {
     }
 
     private void parseAndStoreTransactions(String pdfContent, String statementSource) {
-        if(StatementSource.TRADE_REPUBLIC.getName().equals(statementSource)) {
+        if(StatementSourceEnum.TRADE_REPUBLIC.getName().equals(statementSource)) {
             transactionTradeRepublicService.parseAndStoreTransactions(pdfContent);
         }
     }

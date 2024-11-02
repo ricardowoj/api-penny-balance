@@ -1,7 +1,12 @@
 package com.europe.pennybalance.controller;
 
-import com.europe.pennybalance.enums.StatementSource;
+import com.europe.pennybalance.dto.TransactionTradeRepublicDTO;
+import com.europe.pennybalance.entity.TransactionTradeRepublic;
+import com.europe.pennybalance.enums.StatementSourceEnum;
+import com.europe.pennybalance.enums.TradeRepublicType;
+import com.europe.pennybalance.repository.TransactionTradeRepublicRepository;
 import com.europe.pennybalance.util.PdfFileProvider;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -10,7 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.io.InputStream;
+import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -23,6 +28,9 @@ public class TransactionControllerE2ETest {
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
+    private TransactionTradeRepublicRepository transactionTradeRepublicRepository;
+
     @Test
     public void testUploadTransactionFile() throws Exception {
         MockMultipartFile file = new MockMultipartFile("file", "test.pdf",
@@ -30,8 +38,23 @@ public class TransactionControllerE2ETest {
 
         mockMvc.perform(multipart("/transaction/upload")
                         .file(file)
-                        .param("statementSource", StatementSource.TRADE_REPUBLIC.toString()))
+                        .param("statementSource", StatementSourceEnum.TRADE_REPUBLIC.toString()))
                 .andExpect(status().isOk())
                 .andExpect(content().string("File processed successfully"));
+
+        List<TransactionTradeRepublic> tradeRepublics = transactionTradeRepublicRepository.findAll();
+        Assertions.assertFalse(tradeRepublics.isEmpty());
+        for (TransactionTradeRepublic tradeRepublic : tradeRepublics) {
+            Assertions.assertNotNull(tradeRepublic.getType());
+            TradeRepublicType type = tradeRepublic.getType();
+            if (type == TradeRepublicType.TRANSFER) {
+                Assertions.assertNotNull(tradeRepublic.getId());
+                Assertions.assertNotNull(tradeRepublic.getDate());
+                Assertions.assertNotNull(tradeRepublic.getDescription());
+                Assertions.assertNotNull(tradeRepublic.getMoneyIn());
+                Assertions.assertNotNull(tradeRepublic.getBalance());
+            }
+        }
+
     }
 }

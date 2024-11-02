@@ -3,12 +3,12 @@ package com.europe.pennybalance.enums;
 import lombok.Getter;
 
 @Getter
-public enum StatementSource {
+public enum StatementSourceEnum {
     TRADE_REPUBLIC("trade-republic");
 
     private final String name;
 
-    StatementSource(String name) {
+    StatementSourceEnum(String name) {
         this.name = name;
     }
 
@@ -17,8 +17,8 @@ public enum StatementSource {
         return name;
     }
 
-    public static StatementSource findByName(String name) {
-        for (StatementSource source : values()) {
+    public static StatementSourceEnum findByName(String name) {
+        for (StatementSourceEnum source : values()) {
             if (source.getName().equalsIgnoreCase(name)) {
                 return source;
             }
