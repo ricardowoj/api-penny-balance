@@ -44,4 +44,7 @@ public class TransactionTradeRepublicService {
         }
         repository.deleteById(id);
     }
+
+    public void parseAndStoreTransactions(String pdfContent) {
+    }
 }
