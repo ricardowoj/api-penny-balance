@@ -5,6 +5,7 @@ import com.europe.pennybalance.entity.TransactionTradeRepublic;
 import com.europe.pennybalance.enums.TradeRepublicType;
 import com.europe.pennybalance.mapper.TransactionTradeRepublicMapper;
 import com.europe.pennybalance.repository.TransactionTradeRepublicRepository;
+import com.europe.pennybalance.service.parsePdf.TradeRepublicCardTransactionParser;
 import com.europe.pennybalance.service.parsePdf.TradeRepublicParser;
 import com.europe.pennybalance.service.parsePdf.TradeRepublicTradeParser;
 import com.europe.pennybalance.service.parsePdf.TradeRepublicTransferParser;
@@ -57,6 +58,7 @@ public class TransactionTradeRepublicService {
         Map<TradeRepublicType, TradeRepublicParser> parserMap = new HashMap<>();
         parserMap.put(TradeRepublicType.TRANSFER, new TradeRepublicTransferParser());
         parserMap.put(TradeRepublicType.TRADE, new TradeRepublicTradeParser());
+        parserMap.put(TradeRepublicType.CARD_TRANSACTION, new TradeRepublicCardTransactionParser());
         for (TradeRepublicType type : TradeRepublicType.values()) {
             TradeRepublicParser parser = parserMap.get(type);
             if (parser != null) {
