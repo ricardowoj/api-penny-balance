@@ -6,6 +6,7 @@ import com.europe.pennybalance.enums.TradeRepublicType;
 import com.europe.pennybalance.mapper.TransactionTradeRepublicMapper;
 import com.europe.pennybalance.repository.TransactionTradeRepublicRepository;
 import com.europe.pennybalance.service.parsePdf.TradeRepublicParser;
+import com.europe.pennybalance.service.parsePdf.TradeRepublicTradeParser;
 import com.europe.pennybalance.service.parsePdf.TradeRepublicTransferParser;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -53,13 +54,14 @@ public class TransactionTradeRepublicService {
     public void parseAndStoreTransactions(String pdfContent) {
         String[] lines = pdfContent.split("\n");
         List<TransactionTradeRepublicDTO> transactionListDTO = new ArrayList<>();
-        Map<TradeRepublicType, TradeRepublicTransferParser> parserMap = new HashMap<>();
+        Map<TradeRepublicType, TradeRepublicParser> parserMap = new HashMap<>();
         parserMap.put(TradeRepublicType.TRANSFER, new TradeRepublicTransferParser());
+        parserMap.put(TradeRepublicType.TRADE, new TradeRepublicTradeParser());
         for (TradeRepublicType type : TradeRepublicType.values()) {
-            TradeRepublicTransferParser parser = parserMap.get(type);
-            if (type == TradeRepublicType.TRANSFER) {
-                List<TransactionTradeRepublicDTO> transfersDTO = parser.parse(lines);
-                transactionListDTO.addAll(transfersDTO);
+            TradeRepublicParser parser = parserMap.get(type);
+            if (parser != null) {
+                List<TransactionTradeRepublicDTO> parsedTransactions = parser.parse(lines);
+                transactionListDTO.addAll(parsedTransactions);
             }
         }
         transactionListDTO.forEach(this::saveTransaction);

@@ -6,7 +6,11 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface TradeRepublicParser {
+
+    String EURO_SYMBOL = "€";
+
     List<TransactionTradeRepublicDTO> parse(String[] lines);
-    LocalDate extractDate(String[] lines, int currentIndex);
-    void extractTransactionDetails(String line, TransactionTradeRepublicDTO transactionDTO);
+    void extractDate(String[] lines, int currentIndex, TransactionTradeRepublicDTO transactionDTO);
+    void extractDetails(String[] lines, int currentIndex, TransactionTradeRepublicDTO transactionDTO);
+    void extractAmount(String[] lines, int currentIndex, TransactionTradeRepublicDTO transactionDTO);
 }

@@ -1,6 +1,5 @@
 package com.europe.pennybalance.controller;
 
-import com.europe.pennybalance.dto.TransactionTradeRepublicDTO;
 import com.europe.pennybalance.entity.TransactionTradeRepublic;
 import com.europe.pennybalance.enums.StatementSourceEnum;
 import com.europe.pennybalance.enums.TradeRepublicType;
@@ -52,6 +51,15 @@ public class TransactionControllerE2ETest {
                 Assertions.assertNotNull(tradeRepublic.getDate());
                 Assertions.assertNotNull(tradeRepublic.getDescription());
                 Assertions.assertNotNull(tradeRepublic.getMoneyIn());
+                Assertions.assertNull(tradeRepublic.getMoneyOut());
+                Assertions.assertNotNull(tradeRepublic.getBalance());
+            }
+            if (type == TradeRepublicType.TRADE) {
+                Assertions.assertNotNull(tradeRepublic.getId());
+                Assertions.assertNotNull(tradeRepublic.getDate());
+                Assertions.assertNotNull(tradeRepublic.getDescription());
+                Assertions.assertNull(tradeRepublic.getMoneyIn());
+                Assertions.assertNotNull(tradeRepublic.getMoneyOut());
                 Assertions.assertNotNull(tradeRepublic.getBalance());
             }
         }
