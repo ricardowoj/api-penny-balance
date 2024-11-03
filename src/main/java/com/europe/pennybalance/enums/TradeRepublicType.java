@@ -8,7 +8,8 @@ import java.util.Arrays;
 public enum TradeRepublicType {
     TRANSFER("Transfer"),
     TRADE("Trade"),
-    CARD_TRANSACTION("Transaction");
+    CARD_TRANSACTION("Transaction"),
+    INTEREST_PAYMENT("Payment");
 
     private final String name;
 
