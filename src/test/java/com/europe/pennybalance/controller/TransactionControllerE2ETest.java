@@ -78,6 +78,14 @@ public class TransactionControllerE2ETest {
                 Assertions.assertNull(tradeRepublic.getMoneyOut());
                 Assertions.assertNotNull(tradeRepublic.getBalance());
             }
+            if (type == TradeRepublicType.REWARD) {
+                Assertions.assertNotNull(tradeRepublic.getId());
+                Assertions.assertNotNull(tradeRepublic.getDate());
+                Assertions.assertNotNull(tradeRepublic.getDescription());
+                Assertions.assertNotNull(tradeRepublic.getMoneyIn());
+                Assertions.assertNull(tradeRepublic.getMoneyOut());
+                Assertions.assertNotNull(tradeRepublic.getBalance());
+            }
         }
 
     }

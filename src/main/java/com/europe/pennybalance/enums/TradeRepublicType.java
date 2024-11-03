@@ -9,7 +9,8 @@ public enum TradeRepublicType {
     TRANSFER("Transfer"),
     TRADE("Trade"),
     CARD_TRANSACTION("Transaction"),
-    INTEREST_PAYMENT("Payment");
+    INTEREST_PAYMENT("Payment"),
+    REWARD("Reward");
 
     private final String name;
 
