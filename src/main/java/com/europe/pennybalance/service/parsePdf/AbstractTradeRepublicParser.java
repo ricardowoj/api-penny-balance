@@ -16,33 +16,28 @@ public abstract class AbstractTradeRepublicParser implements TradeRepublicParser
 
     @Override
     public List<TransactionTradeRepublicDTO> parse(String[] lines) {
-        try {
-            List<TransactionTradeRepublicDTO> transfersDTO = new ArrayList<>();
-            for (int i = 10; i < lines.length; i++) {
-                String line = lines[i];
-                boolean startWithKey = line.startsWith(getKey().getName());
-                boolean isYear = DateFormatUtil.isValid(DateFormatTypeEnum.YYYY, lines[i - 1]);
-                if(!isYear && startWithKey && getKey().equals(TradeRepublicType.TRADE)) {
-                    isYear = DateFormatUtil.isValid(DateFormatTypeEnum.YYYY, lines[i - 2]);
-                }
-                if (startWithKey && isYear) {
-                    String completeDescription = buildCompleteDescription(lines, i);
-                    if(getKey().equals(TradeRepublicType.TRADE)) {
-                        System.out.println();
-                    }
-                    TransactionTradeRepublicDTO transferDTO = new TransactionTradeRepublicDTO();
-                    transferDTO.setType(getKey());
-                    extractDate(completeDescription, transferDTO);
-                    extractDetails(completeDescription, transferDTO);
-                    extractAmount(completeDescription, transferDTO);
-                    transfersDTO.add(transferDTO);
-                }
+        List<TransactionTradeRepublicDTO> transfersDTO = new ArrayList<>();
+        for (int i = 10; i < lines.length; i++) {
+            String line = lines[i];
+            boolean startWithKey = line.startsWith(getKey().getName());
+            boolean isYear = DateFormatUtil.isValid(DateFormatTypeEnum.YYYY, lines[i - 1]);
+            if(!isYear && startWithKey && getKey().equals(TradeRepublicType.TRADE)) {
+                isYear = DateFormatUtil.isValid(DateFormatTypeEnum.YYYY, lines[i - 2]);
             }
-            return transfersDTO;
-        }catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            if (startWithKey && isYear) {
+                String completeDescription = buildCompleteDescription(lines, i);
+                if(getKey().equals(TradeRepublicType.TRADE)) {
+                    System.out.println();
+                }
+                TransactionTradeRepublicDTO transferDTO = new TransactionTradeRepublicDTO();
+                transferDTO.setType(getKey());
+                extractDate(completeDescription, transferDTO);
+                extractDetails(completeDescription, transferDTO);
+                extractAmount(completeDescription, transferDTO);
+                transfersDTO.add(transferDTO);
+            }
         }
+        return transfersDTO;
     }
 
     private String buildCompleteDescription(String[] lines, int currentIndex) {
