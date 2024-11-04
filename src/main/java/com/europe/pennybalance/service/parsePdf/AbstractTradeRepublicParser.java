@@ -27,6 +27,9 @@ public abstract class AbstractTradeRepublicParser implements TradeRepublicParser
                 }
                 if (startWithKey && isYear) {
                     String completeDescription = buildCompleteDescription(lines, i);
+                    if(getKey().equals(TradeRepublicType.TRADE)) {
+                        System.out.println();
+                    }
                     TransactionTradeRepublicDTO transferDTO = new TransactionTradeRepublicDTO();
                     transferDTO.setType(getKey());
                     extractDate(completeDescription, transferDTO);
@@ -54,7 +57,7 @@ public abstract class AbstractTradeRepublicParser implements TradeRepublicParser
                 addDate = true;
             }
             String line = lines[i];
-            descriptionBuilder.append(line);
+            descriptionBuilder.append(line + " ");
             if(line.contains(EURO_SYMBOL)) {
                 break;
             }

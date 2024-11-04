@@ -49,17 +49,17 @@ public class TransactionControllerE2ETest {
                 Assertions.assertNotNull(tradeRepublic.getId());
                 Assertions.assertNotNull(tradeRepublic.getDate());
                 Assertions.assertNotNull(tradeRepublic.getDescription());
+                Assertions.assertNull(tradeRepublic.getMoneyOut());
                 Assertions.assertNotNull(tradeRepublic.getMoneyIn());
                 Assertions.assertNotNull(tradeRepublic.getBalance());
-                Assertions.assertNull(tradeRepublic.getMoneyOut());
             }
             if (TradeRepublicType.getMoneyOutTypes().contains(tradeRepublic.getType())) {
                 Assertions.assertNotNull(tradeRepublic.getId());
                 Assertions.assertNotNull(tradeRepublic.getDate());
                 Assertions.assertNotNull(tradeRepublic.getDescription());
-                Assertions.assertNotNull(tradeRepublic.getMoneyIn());
+                Assertions.assertNull(tradeRepublic.getMoneyIn());
+                Assertions.assertNotNull(tradeRepublic.getMoneyOut());
                 Assertions.assertNotNull(tradeRepublic.getBalance());
-                Assertions.assertNull(tradeRepublic.getMoneyOut());
             }
         }
 

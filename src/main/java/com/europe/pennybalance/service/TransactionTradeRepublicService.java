@@ -54,10 +54,10 @@ public class TransactionTradeRepublicService {
         List<TransactionTradeRepublicDTO> transactionListDTO = new ArrayList<>();
         Map<TradeRepublicType, TradeRepublicParser> parserMap = new HashMap<>();
         parserMap.put(TradeRepublicType.TRANSFER, new TradeRepublicTransferParser());
-        //parserMap.put(TradeRepublicType.TRADE, new TradeRepublicTradeParser());
-        //parserMap.put(TradeRepublicType.CARD_TRANSACTION, new TradeRepublicCardTransactionParser());
-        //parserMap.put(TradeRepublicType.INTEREST_PAYMENT, new TradeRepublicInterestPaymentParser());
-        //parserMap.put(TradeRepublicType.REWARD, new TradeRepublicRewardParser());
+        parserMap.put(TradeRepublicType.TRADE, new TradeRepublicTradeParser());
+        parserMap.put(TradeRepublicType.CARD_TRANSACTION, new TradeRepublicCardTransactionParser());
+        parserMap.put(TradeRepublicType.INTEREST_PAYMENT, new TradeRepublicInterestPaymentParser());
+        parserMap.put(TradeRepublicType.REWARD, new TradeRepublicRewardParser());
         for (TradeRepublicType type : TradeRepublicType.values()) {
             TradeRepublicParser parser = parserMap.get(type);
             if (parser != null) {
