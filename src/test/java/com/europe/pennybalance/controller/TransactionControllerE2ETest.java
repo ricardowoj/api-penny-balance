@@ -1,9 +1,10 @@
 package com.europe.pennybalance.controller;
 
+import com.europe.pennybalance.dto.TransactionTradeRepublicDTO;
 import com.europe.pennybalance.entity.TransactionTradeRepublic;
-import com.europe.pennybalance.enums.StatementSourceEnum;
 import com.europe.pennybalance.enums.TradeRepublicType;
 import com.europe.pennybalance.repository.TransactionTradeRepublicRepository;
+import com.europe.pennybalance.util.CsvUtil;
 import com.europe.pennybalance.util.PdfFileProvider;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -14,8 +15,12 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.List;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -35,11 +40,17 @@ public class TransactionControllerE2ETest {
         MockMultipartFile file = new MockMultipartFile("file", "test.pdf",
                 MediaType.APPLICATION_PDF_VALUE, PdfFileProvider.getStatementTradeRepublicPdf());
 
-        mockMvc.perform(multipart("/transaction/upload")
-                        .file(file)
-                        .param("statementSource", StatementSourceEnum.TRADE_REPUBLIC.toString()))
+        byte[] responseContent = mockMvc.perform(multipart("/transaction/upload")
+                        .file(file))
                 .andExpect(status().isOk())
-                .andExpect(content().string("File processed successfully"));
+                .andExpect(content().contentType("text/csv"))
+                .andReturn()
+                .getResponse()
+                .getContentAsByteArray();
+
+        InputStream csvInputStream = new ByteArrayInputStream(responseContent);
+        List<TransactionTradeRepublicDTO> transactionList = CsvUtil.readCsvToList(csvInputStream, TransactionTradeRepublicDTO.class);
+        Assertions.assertFalse(transactionList.isEmpty());
 
         List<TransactionTradeRepublic> tradeRepublics = transactionTradeRepublicRepository.findAll();
         Assertions.assertFalse(tradeRepublics.isEmpty());
