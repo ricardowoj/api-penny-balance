@@ -30,7 +30,7 @@ public class TransactionTradeRepublicService {
     }
 
     public List<TransactionTradeRepublicDTO> getAllTransactions() {
-        List<TransactionTradeRepublic> transactions = repository.findAll();
+        List<TransactionTradeRepublic> transactions = repository.findAllByOrderByDateAsc();
         return transactions.stream()
                 .map(mapper::toDTO)
                 .collect(Collectors.toList());
