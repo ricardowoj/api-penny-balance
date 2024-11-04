@@ -1,6 +1,5 @@
 package com.europe.pennybalance.service;
 
-import com.europe.pennybalance.enums.StatementSourceEnum;
 import lombok.AllArgsConstructor;
 import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -16,17 +15,15 @@ public class TransactionService {
 
     private final TransactionTradeRepublicService transactionTradeRepublicService;
 
-    public void processTransactionFile(MultipartFile file, String statementSource) throws IOException {
+    public void processTransactionFile(MultipartFile file) throws IOException {
         PDDocument document = Loader.loadPDF(file.getBytes());
         PDFTextStripper pdfStripper = new PDFTextStripper();
         String pdfContent = pdfStripper.getText(document);
         document.close();
-        parseAndStoreTransactions(pdfContent, statementSource);
+        parseAndStoreTransactions(pdfContent);
     }
 
-    private void parseAndStoreTransactions(String pdfContent, String statementSource) {
-        if(StatementSourceEnum.TRADE_REPUBLIC.getName().equals(statementSource)) {
-            transactionTradeRepublicService.parseAndStoreTransactions(pdfContent);
-        }
+    private void parseAndStoreTransactions(String pdfContent) {
+        transactionTradeRepublicService.parseAndStoreTransactions(pdfContent);
     }
 }
