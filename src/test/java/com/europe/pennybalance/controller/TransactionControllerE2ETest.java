@@ -45,46 +45,21 @@ public class TransactionControllerE2ETest {
         Assertions.assertFalse(tradeRepublics.isEmpty());
         for (TransactionTradeRepublic tradeRepublic : tradeRepublics) {
             Assertions.assertNotNull(tradeRepublic.getType());
-            TradeRepublicType type = tradeRepublic.getType();
-            if (type == TradeRepublicType.TRANSFER) {
+            if (TradeRepublicType.getMoneyInTypes().contains(tradeRepublic.getType())) {
                 Assertions.assertNotNull(tradeRepublic.getId());
                 Assertions.assertNotNull(tradeRepublic.getDate());
                 Assertions.assertNotNull(tradeRepublic.getDescription());
                 Assertions.assertNotNull(tradeRepublic.getMoneyIn());
+                Assertions.assertNotNull(tradeRepublic.getBalance());
                 Assertions.assertNull(tradeRepublic.getMoneyOut());
-                Assertions.assertNotNull(tradeRepublic.getBalance());
             }
-            if (type == TradeRepublicType.TRADE) {
-                Assertions.assertNotNull(tradeRepublic.getId());
-                Assertions.assertNotNull(tradeRepublic.getDate());
-                Assertions.assertNotNull(tradeRepublic.getDescription());
-                Assertions.assertNull(tradeRepublic.getMoneyIn());
-                Assertions.assertNotNull(tradeRepublic.getMoneyOut());
-                Assertions.assertNotNull(tradeRepublic.getBalance());
-            }
-            if (type == TradeRepublicType.CARD_TRANSACTION) {
-                Assertions.assertNotNull(tradeRepublic.getId());
-                Assertions.assertNotNull(tradeRepublic.getDate());
-                Assertions.assertNotNull(tradeRepublic.getDescription());
-                Assertions.assertNull(tradeRepublic.getMoneyIn());
-                Assertions.assertNotNull(tradeRepublic.getMoneyOut());
-                Assertions.assertNotNull(tradeRepublic.getBalance());
-            }
-            if (type == TradeRepublicType.INTEREST_PAYMENT) {
+            if (TradeRepublicType.getMoneyOutTypes().contains(tradeRepublic.getType())) {
                 Assertions.assertNotNull(tradeRepublic.getId());
                 Assertions.assertNotNull(tradeRepublic.getDate());
                 Assertions.assertNotNull(tradeRepublic.getDescription());
                 Assertions.assertNotNull(tradeRepublic.getMoneyIn());
-                Assertions.assertNull(tradeRepublic.getMoneyOut());
                 Assertions.assertNotNull(tradeRepublic.getBalance());
-            }
-            if (type == TradeRepublicType.REWARD) {
-                Assertions.assertNotNull(tradeRepublic.getId());
-                Assertions.assertNotNull(tradeRepublic.getDate());
-                Assertions.assertNotNull(tradeRepublic.getDescription());
-                Assertions.assertNotNull(tradeRepublic.getMoneyIn());
                 Assertions.assertNull(tradeRepublic.getMoneyOut());
-                Assertions.assertNotNull(tradeRepublic.getBalance());
             }
         }
 
